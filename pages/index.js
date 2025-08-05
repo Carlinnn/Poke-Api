@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import PokedexLayout from '../components/PokedexLayout';
 import SearchBar from '../components/SearchBar';
 import PokemonCard from '../components/PokemonCard';
@@ -12,12 +13,14 @@ const Home = () => {
   const [evolutionChain, setEvolutionChain] = useState(null);
   const [showMoves, setShowMoves] = useState(false);
   const [moves, setMoves] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = async (e) => {
     e.preventDefault();
     setShowMoves(false);
     setMoves([]);
     if (!query) return;
+    setLoading(true);
     const result = await fetchPokemon(query);
     setPokemon(result);
 
@@ -36,12 +39,14 @@ const Home = () => {
       setMoves([]);
       setShowMoves(false);
     }
+    setLoading(false);
   };
 
   const handleEvolutionSelect = async (name) => {
     setShowMoves(false);
     setMoves([]);
     setQuery(name);
+    setLoading(true);
     const result = await fetchPokemon(name);
     setPokemon(result);
 
@@ -60,6 +65,7 @@ const Home = () => {
       setMoves([]);
       setShowMoves(false);
     }
+    setLoading(false);
   };
 
   return (
@@ -76,13 +82,21 @@ const Home = () => {
           onChange={e => setQuery(e.target.value)}
           onSubmit={handleSearch}
         />
-        <div className="d-flex flex-column flex-md-row gap-4 align-items-stretch justify-content-center w-100 mt-3">
-          <div className="flex-grow-1" style={{ minWidth: 320 }}>
-            <PokemonCard pokemon={pokemon} />
-            <EvolutionChain chain={evolutionChain} onSelect={handleEvolutionSelect} />
+        {loading ? (
+          <div className="d-flex justify-content-center align-items-center w-100" style={{ minHeight: 300 }}>
+            <div className="spinner-border text-primary" role="status" aria-label="Carregando">
+              <span className="visually-hidden">Carregando...</span>
+            </div>
           </div>
-          {/* MovesCard removido. Moves agora aparecem integradas ao PokemonCard. */}
-        </div>
+        ) : (
+          <div className="d-flex flex-column flex-md-row gap-4 align-items-stretch justify-content-center w-100 mt-3">
+            <div className="flex-grow-1" style={{ minWidth: 320 }}>
+              <PokemonCard pokemon={pokemon} />
+              <EvolutionChain chain={evolutionChain} onSelect={handleEvolutionSelect} />
+            </div>
+            {/* MovesCard removido. Moves agora aparecem integradas ao PokemonCard. */}
+          </div>
+        )}
       </div>
     </div>
   );
