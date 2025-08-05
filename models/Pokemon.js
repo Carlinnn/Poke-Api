@@ -6,6 +6,7 @@ export default class Pokemon {
     this.types = data.types?.map(t => t.type.name) || [];
     this.height = data.height;
     this.weight = data.weight;
+    this.raw = data; // Adicione isso para acessar moves
   }
 
   get displayName() {

@@ -27,3 +27,24 @@ export async function fetchEvolutionChain(pokemonSpeciesUrl) {
     return null;
   }
 }
+
+export async function fetchMoves(moveNames) {
+  const moves = [];
+  for (const name of moveNames) {
+    try {
+      const res = await fetch(`https://pokeapi.co/api/v2/move/${name}`);
+      if (!res.ok) continue;
+      const data = await res.json();
+      moves.push({
+        id: data.id,
+        name: data.name,
+        accuracy: data.accuracy,
+        power: data.power,
+        pp: data.pp,
+        type: data.type.name,
+        effect: data.effect_entries?.find(e => e.language.name === 'en')?.short_effect || '',
+      });
+    } catch {}
+  }
+  return moves;
+}
