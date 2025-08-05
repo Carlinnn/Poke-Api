@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PokedexLayout from '../components/PokedexLayout';
 import SearchBar from '../components/SearchBar';
@@ -14,6 +14,21 @@ const Home = () => {
   const [showMoves, setShowMoves] = useState(false);
   const [moves, setMoves] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [pokemonNames, setPokemonNames] = useState([]);
+
+  // Buscar lista de nomes de Pokémon ao carregar a página
+  useEffect(() => {
+    async function fetchNames() {
+      try {
+        const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=10000');
+        const data = await res.json();
+        setPokemonNames(data.results.map(p => p.name));
+      } catch (err) {
+        setPokemonNames([]);
+      }
+    }
+    fetchNames();
+  }, []);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -81,6 +96,7 @@ const Home = () => {
           value={query}
           onChange={e => setQuery(e.target.value)}
           onSubmit={handleSearch}
+          suggestions={pokemonNames}
         />
         {loading ? (
           <div className="d-flex justify-content-center align-items-center w-100" style={{ minHeight: 300 }}>
