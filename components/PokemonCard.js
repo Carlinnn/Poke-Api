@@ -21,7 +21,7 @@ const typeColors = {
   fairy: 'pink',
 };
 
-const PokemonCard = ({ pokemon, isDarkMode }) => {
+const PokemonCard = ({ pokemon, isDarkMode, showToast }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
@@ -36,9 +36,11 @@ const PokemonCard = ({ pokemon, isDarkMode }) => {
     if (favs.includes(pokemon.name)) {
       favs = favs.filter(n => n !== pokemon.name);
       setIsFavorite(false);
+      if (showToast) showToast(`${pokemon.displayName} removido dos favoritos!`, 'warning');
     } else {
       favs.push(pokemon.name);
       setIsFavorite(true);
+      if (showToast) showToast(`${pokemon.displayName} adicionado aos favoritos!`, 'success');
     }
     localStorage.setItem('favorites', JSON.stringify(favs));
   };

@@ -1,9 +1,14 @@
 import React from 'react';
+import Toast from '../components/Toast';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/globals.css';
 import '../styles/fade.css';
 
 function MyApp({ Component, pageProps }) {
+  // Toast state
+  const [toast, setToast] = React.useState({ show: false, message: '', type: 'info' });
+  const showToast = (message, type = 'info') => setToast({ show: true, message, type });
+  const hideToast = () => setToast({ ...toast, show: false });
   // Dark mode toggle
   const [isDark, setIsDark] = React.useState(false);
 
@@ -49,7 +54,8 @@ function MyApp({ Component, pageProps }) {
           </svg>
         )}
       </button>
-      <Component {...pageProps} isDarkMode={isDark} />
+      <Toast show={toast.show} message={toast.message} type={toast.type} onClose={hideToast} />
+      <Component {...pageProps} isDarkMode={isDark} showToast={showToast} />
     </>
   );
 }

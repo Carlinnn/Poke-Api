@@ -139,7 +139,7 @@ const Home = (props) => {
         ) : (
           <div className="row justify-content-center mt-3">
             <div className="col-12 col-md-8 fade-in">
-              <PokemonCard pokemon={pokemon} isDarkMode={props.isDarkMode} />
+              <PokemonCard pokemon={pokemon} isDarkMode={props.isDarkMode} showToast={props.showToast} />
               <EvolutionChain chain={evolutionChain} onSelect={handleEvolutionSelect} isDarkMode={props.isDarkMode} />
             </div>
           </div>
