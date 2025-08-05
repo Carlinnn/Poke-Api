@@ -1,11 +1,10 @@
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-import { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import PokedexLayout from '../components/PokedexLayout';
 import SearchBar from '../components/SearchBar';
 import PokemonCard from '../components/PokemonCard';
 import EvolutionChain from '../components/EvolutionChain';
-import { fetchMoves, fetchPokemon, fetchEvolutionChain } from '../services/pokeApiService';
+import { fetchPokemon, fetchEvolutionChain, fetchMoves } from '../services/pokeApiService';
+
 
 const Home = () => {
   const [query, setQuery] = useState('');
@@ -138,7 +137,7 @@ const Home = () => {
           </div>
         ) : (
           <div className="row justify-content-center mt-3">
-            <div className="col-12 col-md-8">
+            <div className="col-12 col-md-8 fade-in">
               <PokemonCard pokemon={pokemon} />
               <EvolutionChain chain={evolutionChain} onSelect={handleEvolutionSelect} />
             </div>
