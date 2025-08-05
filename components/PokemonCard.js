@@ -21,7 +21,7 @@ const typeColors = {
   fairy: 'pink',
 };
 
-const PokemonCard = ({ pokemon }) => {
+const PokemonCard = ({ pokemon, isDarkMode }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
@@ -81,10 +81,10 @@ const PokemonCard = ({ pokemon }) => {
 
   return (
     <div className="flex-grow-1" style={{ minWidth: 320 }}>
-      <div className="card mb-4 border-0 shadow-lg" style={{ maxWidth: 900, background: 'linear-gradient(90deg, #f8fafc 60%, #e0e7ff 100%)', borderRadius: 32 }}>
+      <div className={`card mb-4 border-0 shadow-lg ${isDarkMode ? 'bg-dark text-light border-light' : 'bg-white text-dark border-0'}`} style={{ maxWidth: 900, borderRadius: 32, background: isDarkMode ? '#222' : '#fff' }}>
         <div className="row g-0 align-items-stretch">
           {/* Painel esquerdo */}
-          <div className="col-md-4 d-flex flex-column align-items-center justify-content-center p-4" style={{ background: '#eef2ff', borderRadius: '32px 0 0 32px', position: 'relative' }}>
+          <div className={`col-md-4 d-flex flex-column align-items-center justify-content-center p-4 ${isDarkMode ? 'bg-dark text-light border-light' : ''}`} style={{ background: isDarkMode ? '#222' : '#eef2ff', borderRadius: '32px 0 0 32px', position: 'relative', borderRight: isDarkMode ? '1px solid #444' : 'none' }}>
             {/* Botão de favorito */}
             <button
               type="button"
@@ -104,9 +104,9 @@ const PokemonCard = ({ pokemon }) => {
               src={pokemon.image}
               alt={pokemon.name}
               className="img-fluid rounded-4 shadow mb-3"
-              style={{ width: 130, height: 130, objectFit: 'contain', background: '#f8f9fa', border: '3px solid #e0e7ff' }}
+              style={{ width: 130, height: 130, objectFit: 'contain', background: isDarkMode ? '#222' : '#f8f9fa', border: isDarkMode ? '3px solid #444' : '3px solid #e0e7ff' }}
             />
-            <h2 className="h3 fw-bold mb-2 text-center" style={{ color: '#6366f1' }}>{pokemon.displayName}</h2>
+            <h2 className="h3 fw-bold mb-2 text-center" style={{ color: isDarkMode ? '#a5b4fc' : '#6366f1' }}>{pokemon.displayName}</h2>
             <div className="d-flex flex-row flex-wrap gap-2 justify-content-center mb-2">
               {pokemon.types.map(type => (
                 <span key={type} className={`badge bg-${typeColors[type] || 'secondary'} text-capitalize px-3 py-2 fs-6 shadow-sm`} style={{ fontWeight: 500 }}>
@@ -175,7 +175,7 @@ const PokemonCard = ({ pokemon }) => {
                 <div className="d-flex flex-row flex-wrap gap-2 mt-1">
                   {heldItems.map((item, idx) => (
                     <div key={idx} className="border rounded-3 p-2 bg-light shadow-sm" style={{ minWidth: 120 }}>
-                      <span className="fw-bold text-capitalize">{item.name}</span>
+                      <span className="fw-bold text-capitalize text-dark">{item.name}</span>
                       <br />
                       <span className="small text-muted">Versions: {item.versions.join(', ')}</span>
                       <br />

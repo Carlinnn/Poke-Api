@@ -6,7 +6,7 @@ import EvolutionChain from '../components/EvolutionChain';
 import { fetchPokemon, fetchEvolutionChain, fetchMoves } from '../services/pokeApiService';
 
 
-const Home = () => {
+const Home = (props) => {
   const [query, setQuery] = useState('');
   const [pokemon, setPokemon] = useState(null);
   const [evolutionChain, setEvolutionChain] = useState(null);
@@ -94,13 +94,13 @@ const Home = () => {
   };
 
   return (
-    <div className="min-vh-100 bg-light d-flex align-items-center justify-content-center">
+    <div className={`min-vh-100 d-flex align-items-center justify-content-center ${props.isDarkMode ? 'bg-dark' : 'bg-light'}`}>
       <Head>
         <title>Pokédex</title>
         <meta name="description" content="Pokédex com Bootstrap" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="card shadow-lg p-4" style={{ maxWidth: 1000, width: '100%', borderRadius: 24 }} role="main" aria-label="Área principal da Pokédex">
+      <div className={`card shadow-lg p-4 ${props.isDarkMode ? 'bg-dark text-light border-light' : 'bg-white text-dark border-dark'}`} style={{ maxWidth: 1000, width: '100%', borderRadius: 24 }} role="main" aria-label="Área principal da Pokédex">
         <div className="row align-items-center mb-4" role="banner">
           <div className="col-12 col-md-8 text-center text-md-start mb-2 mb-md-0">
             <h1 className="display-5 fw-bold mb-0" style={{ wordBreak: 'break-word' }}>Pokédex</h1>
@@ -126,6 +126,7 @@ const Home = () => {
               onChange={e => setQuery(e.target.value)}
               onSubmit={handleSearch}
               suggestions={pokemonNames}
+              isDarkMode={props.isDarkMode}
             />
           </div>
         </div>
@@ -138,8 +139,8 @@ const Home = () => {
         ) : (
           <div className="row justify-content-center mt-3">
             <div className="col-12 col-md-8 fade-in">
-              <PokemonCard pokemon={pokemon} />
-              <EvolutionChain chain={evolutionChain} onSelect={handleEvolutionSelect} />
+              <PokemonCard pokemon={pokemon} isDarkMode={props.isDarkMode} />
+              <EvolutionChain chain={evolutionChain} onSelect={handleEvolutionSelect} isDarkMode={props.isDarkMode} />
             </div>
           </div>
         )}

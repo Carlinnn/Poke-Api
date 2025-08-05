@@ -22,6 +22,22 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
+body.dark-mode {
+  background-color: #181a1b;
+  color: #e2e2e2;
+}
+
+body.dark-mode a {
+  color: #e2e2e2;
+}
+
+body.dark-mode .btn,
+body.dark-mode button {
+  background-color: #222 !important;
+  color: #e2e2e2 !important;
+  border-color: #444 !important;
+}
+
 ul {
   list-style: none;
   padding: 0;
