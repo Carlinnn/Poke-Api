@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const typeColors = {
   normal: 'secondary',
@@ -22,6 +22,27 @@ const typeColors = {
 };
 
 const PokemonCard = ({ pokemon }) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    if (!pokemon) return;
+    const favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+    setIsFavorite(favs.includes(pokemon.name));
+  }, [pokemon]);
+
+  const handleFavorite = () => {
+    if (!pokemon) return;
+    let favs = JSON.parse(localStorage.getItem('favorites') || '[]');
+    if (favs.includes(pokemon.name)) {
+      favs = favs.filter(n => n !== pokemon.name);
+      setIsFavorite(false);
+    } else {
+      favs.push(pokemon.name);
+      setIsFavorite(true);
+    }
+    localStorage.setItem('favorites', JSON.stringify(favs));
+  };
+
   if (!pokemon) {
     return (
       <div className="d-flex flex-column align-items-center justify-content-center" style={{ minHeight: 400 }}>
@@ -50,7 +71,21 @@ const PokemonCard = ({ pokemon }) => {
       <div className="card mb-4 border-0 shadow-lg" style={{ maxWidth: 900, background: 'linear-gradient(90deg, #f8fafc 60%, #e0e7ff 100%)', borderRadius: 32 }}>
         <div className="row g-0 align-items-stretch">
           {/* Painel esquerdo */}
-          <div className="col-md-4 d-flex flex-column align-items-center justify-content-center p-4" style={{ background: '#eef2ff', borderRadius: '32px 0 0 32px' }}>
+          <div className="col-md-4 d-flex flex-column align-items-center justify-content-center p-4" style={{ background: '#eef2ff', borderRadius: '32px 0 0 32px', position: 'relative' }}>
+            {/* Botão de favorito */}
+            <button
+              type="button"
+              className="btn btn-light position-absolute"
+              style={{ top: 16, right: 16, zIndex: 2, borderRadius: '50%', boxShadow: '0 2px 8px #c7d2fe' }}
+              onClick={handleFavorite}
+              aria-label={isFavorite ? 'Desfavoritar' : 'Favoritar'}
+            >
+              {isFavorite ? (
+                <span role="img" aria-label="Favorito" style={{ fontSize: 28, color: '#f59e42' }}>★</span>
+              ) : (
+                <span role="img" aria-label="Não favorito" style={{ fontSize: 28, color: '#d1d5db' }}>☆</span>
+              )}
+            </button>
             <img
               src={pokemon.image}
               alt={pokemon.name}
