@@ -60,6 +60,19 @@ const PokemonCard = ({ pokemon }) => {
     value: s.base_stat,
   }));
   const moves = pokemon.raw.moves?.slice(0, 20) || [];
+
+  // Função para buscar detalhes do move
+  const getMoveDetails = (move) => {
+    if (!move || !move.move) return {};
+    return {
+      name: move.move.name.replace('-', ' '),
+      type: move.moveDetails?.type?.name,
+      power: move.moveDetails?.power,
+      accuracy: move.moveDetails?.accuracy,
+      pp: move.moveDetails?.pp,
+      effect: move.moveDetails?.effect_entries?.[0]?.short_effect,
+    };
+  };
   const heldItems = pokemon.raw.held_items.map(i => ({
     name: i.item.name,
     versions: i.version_details.map(v => v.version.name),
@@ -134,15 +147,24 @@ const PokemonCard = ({ pokemon }) => {
             {/* Moves encaixados no painel direito */}
             <div className="">
               <div className="mb-2 text-primary fw-bold">Moves</div>
-              <div className="d-flex flex-row flex-wrap gap-2 mt-1" style={{ maxHeight: 180, overflowY: 'auto' }}>
+              <div className="d-flex flex-row gap-2 mt-1 overflow-auto" style={{ maxWidth: '100%', whiteSpace: 'nowrap', paddingBottom: 8 }}>
                 {moves.length === 0 ? (
                   <span className="text-muted">Nenhum move encontrado.</span>
                 ) : (
-                  moves.map((m, idx) => (
-                    <span key={idx} className="badge bg-warning text-dark px-3 py-2 shadow-sm text-capitalize" style={{ fontWeight: 500 }}>
-                      {m.move.name.replace('-', ' ')}
-                    </span>
-                  ))
+                  moves.map((m, idx) => {
+                    const details = getMoveDetails(m);
+                    const tooltip = `Tipo: ${details.type || '-'}\nPoder: ${details.power || '-'}\nPrecisão: ${details.accuracy || '-'}\nPP: ${details.pp || '-'}\nEfeito: ${details.effect || '-'}`;
+                    return (
+                      <span
+                        key={idx}
+                        className="badge bg-warning text-dark px-3 py-2 shadow-sm text-capitalize d-inline-block"
+                        style={{ fontWeight: 500, marginRight: 8, cursor: 'pointer' }}
+                        title={tooltip}
+                      >
+                        {details.name}
+                      </span>
+                    );
+                  })
                 )}
               </div>
             </div>
