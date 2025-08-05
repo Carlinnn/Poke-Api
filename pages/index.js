@@ -101,27 +101,35 @@ const Home = () => {
         <meta name="description" content="Pokédex com Bootstrap" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="card shadow-lg p-4" style={{ maxWidth: 1000, width: '100%' }} role="main" aria-label="Área principal da Pokédex">
-        <div className="d-flex justify-content-between align-items-center mb-4" role="banner">
-          <h1 className="display-5 fw-bold text-center mb-0">Pokédex</h1>
-          <button
-            type="button"
-            className="btn btn-outline-warning ms-2"
-            style={{ fontWeight: 600 }}
-            onClick={() => setShowFavs(true)}
-            aria-label="Ver Pokémon favoritos"
-            tabIndex={0}
-          >
-            <span role="img" aria-label="Favoritos" style={{ fontSize: 24, marginRight: 8 }}>★</span>
-            Favoritos
-          </button>
+      <div className="card shadow-lg p-4" style={{ maxWidth: 1000, width: '100%', borderRadius: 24 }} role="main" aria-label="Área principal da Pokédex">
+        <div className="row align-items-center mb-4" role="banner">
+          <div className="col-12 col-md-8 text-center text-md-start mb-2 mb-md-0">
+            <h1 className="display-5 fw-bold mb-0" style={{ wordBreak: 'break-word' }}>Pokédex</h1>
+          </div>
+          <div className="col-12 col-md-4 text-center text-md-end">
+            <button
+              type="button"
+              className="btn btn-outline-warning"
+              style={{ fontWeight: 600, minWidth: 120 }}
+              onClick={() => setShowFavs(true)}
+              aria-label="Ver Pokémon favoritos"
+              tabIndex={0}
+            >
+              <span role="img" aria-label="Favoritos" style={{ fontSize: 24, marginRight: 8 }}>★</span>
+              Favoritos
+            </button>
+          </div>
         </div>
-        <SearchBar
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-          onSubmit={handleSearch}
-          suggestions={pokemonNames}
-        />
+        <div className="row justify-content-center mb-3">
+          <div className="col-12 col-md-6">
+            <SearchBar
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              onSubmit={handleSearch}
+              suggestions={pokemonNames}
+            />
+          </div>
+        </div>
         {loading ? (
           <div className="d-flex justify-content-center align-items-center w-100" style={{ minHeight: 300 }}>
             <div className="spinner-border text-primary" role="status" aria-label="Carregando">
@@ -129,12 +137,11 @@ const Home = () => {
             </div>
           </div>
         ) : (
-          <div className="d-flex flex-column flex-md-row gap-4 align-items-stretch justify-content-center w-100 mt-3">
-            <div className="flex-grow-1" style={{ minWidth: 320 }}>
+          <div className="row justify-content-center mt-3">
+            <div className="col-12 col-md-8">
               <PokemonCard pokemon={pokemon} />
               <EvolutionChain chain={evolutionChain} onSelect={handleEvolutionSelect} />
             </div>
-            {/* MovesCard removido. Moves agora aparecem integradas ao PokemonCard. */}
           </div>
         )}
         {/* Modal de favoritos */}
@@ -167,6 +174,6 @@ const Home = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Home;
