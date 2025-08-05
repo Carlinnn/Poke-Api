@@ -32,7 +32,7 @@ const SearchBar = ({ value, onChange, onSubmit, suggestions = [] }) => {
   };
 
   return (
-    <form onSubmit={onSubmit} className="mb-4 position-relative" autoComplete="off">
+    <form onSubmit={onSubmit} className="mb-4 position-relative" autoComplete="off" role="search" aria-label="Buscar Pokémon">
       <input
         type="text"
         placeholder="Name or Number"
@@ -41,16 +41,19 @@ const SearchBar = ({ value, onChange, onSubmit, suggestions = [] }) => {
         className="form-control"
         ref={inputRef}
         onBlur={handleBlur}
-        aria-label="Buscar Pokémon"
+        aria-label="Campo de busca de Pokémon"
       />
       {showDropdown && (
-        <ul className="list-group position-absolute w-100 shadow" style={{ zIndex: 10, top: '100%' }}>
+        <ul className="list-group position-absolute w-100 shadow" style={{ zIndex: 10, top: '100%' }} role="listbox" aria-label="Sugestões de Pokémon">
           {filtered.map(name => (
             <li
               key={name}
               className="list-group-item list-group-item-action"
               style={{ cursor: 'pointer' }}
               onMouseDown={() => handleSelect(name)}
+              tabIndex={0}
+              role="option"
+              aria-selected={false}
             >
               {name}
             </li>

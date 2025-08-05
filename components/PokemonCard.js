@@ -91,7 +91,8 @@ const PokemonCard = ({ pokemon }) => {
               className="btn btn-light position-absolute"
               style={{ top: 16, right: 16, zIndex: 2, borderRadius: '50%', boxShadow: '0 2px 8px #c7d2fe' }}
               onClick={handleFavorite}
-              aria-label={isFavorite ? 'Desfavoritar' : 'Favoritar'}
+              aria-label={isFavorite ? 'Desfavoritar Pokémon' : 'Favoritar Pokémon'}
+              tabIndex={0}
             >
               {isFavorite ? (
                 <span role="img" aria-label="Favorito" style={{ fontSize: 28, color: '#f59e42' }}>★</span>

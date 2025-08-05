@@ -101,15 +101,16 @@ const Home = () => {
         <meta name="description" content="Pokédex com Bootstrap" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="card shadow-lg p-4" style={{ maxWidth: 1000, width: '100%' }}>
-        <div className="d-flex justify-content-between align-items-center mb-4">
+      <div className="card shadow-lg p-4" style={{ maxWidth: 1000, width: '100%' }} role="main" aria-label="Área principal da Pokédex">
+        <div className="d-flex justify-content-between align-items-center mb-4" role="banner">
           <h1 className="display-5 fw-bold text-center mb-0">Pokédex</h1>
           <button
             type="button"
             className="btn btn-outline-warning ms-2"
             style={{ fontWeight: 600 }}
             onClick={() => setShowFavs(true)}
-            aria-label="Ver favoritos"
+            aria-label="Ver Pokémon favoritos"
+            tabIndex={0}
           >
             <span role="img" aria-label="Favoritos" style={{ fontSize: 24, marginRight: 8 }}>★</span>
             Favoritos
@@ -138,22 +139,22 @@ const Home = () => {
         )}
         {/* Modal de favoritos */}
         {showFavs && (
-          <div className="modal fade show" style={{ display: 'block', background: 'rgba(0,0,0,0.3)' }} tabIndex="-1" role="dialog" aria-modal="true">
+          <div className="modal fade show" style={{ display: 'block', background: 'rgba(0,0,0,0.3)' }} tabIndex="-1" role="dialog" aria-modal="true" aria-labelledby="modal-favoritos">
             <div className="modal-dialog modal-dialog-centered" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title">Pokémon Favoritos</h5>
-                  <button type="button" className="btn-close" aria-label="Fechar" onClick={() => setShowFavs(false)}></button>
+                  <h5 className="modal-title" id="modal-favoritos">Pokémon Favoritos</h5>
+                  <button type="button" className="btn-close" aria-label="Fechar modal de favoritos" onClick={() => setShowFavs(false)} tabIndex={0}></button>
                 </div>
                 <div className="modal-body">
                   {favorites.length === 0 ? (
                     <div className="text-muted">Nenhum Pokémon favoritado.</div>
                   ) : (
-                    <ul className="list-group">
+                    <ul className="list-group" role="list" aria-label="Lista de Pokémon favoritos">
                       {favorites.map(name => (
-                        <li key={name} className="list-group-item d-flex justify-content-between align-items-center">
+                        <li key={name} className="list-group-item d-flex justify-content-between align-items-center" role="listitem">
                           <span className="text-capitalize">{name}</span>
-                          <button className="btn btn-sm btn-primary" onClick={() => { setQuery(name); setShowFavs(false); handleSearch({ preventDefault: () => {} }); }}>Ver</button>
+                          <button className="btn btn-sm btn-primary" onClick={() => { setQuery(name); setShowFavs(false); handleSearch({ preventDefault: () => {} }); }} aria-label={`Ver detalhes de ${name}`} tabIndex={0}>Ver</button>
                         </li>
                       ))}
                     </ul>
