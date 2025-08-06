@@ -5,7 +5,7 @@
   background: #f8f8f8;
   color: #333;
   font-size: 1rem;
-  position: fixed;
+  position: relative;
   left: 0;
   bottom: 0;
   z-index: 100;
@@ -28,4 +28,15 @@
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    font-size: 0.85rem;
+    padding: 10px 4px;
+  }
+  .author {
+    font-size: 1em;
+    word-break: break-word;
+  }
 }
