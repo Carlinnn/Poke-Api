@@ -1,0 +1,31 @@
+.footer {
+  width: 100%;
+  text-align: center;
+  padding: 16px 0;
+  background: #f8f8f8;
+  color: #333;
+  font-size: 1rem;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+}
+
+.author {
+  font-weight: bold;
+  font-size: 1.1em;
+  letter-spacing: 0.5px;
+  background: linear-gradient(270deg, #1976d2, #38a1db, #43e97b, #38f9d7, #1976d2);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientMove 4s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}

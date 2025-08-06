@@ -1,5 +1,6 @@
 import React from 'react';
 import Toast from '../components/Toast';
+import Footer from '../components/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/globals.css';
 import '../styles/fade.css';
@@ -54,8 +55,9 @@ function MyApp({ Component, pageProps }) {
           </svg>
         )}
       </button>
+      <Component {...pageProps} />
       <Toast show={toast.show} message={toast.message} type={toast.type} onClose={hideToast} />
-      <Component {...pageProps} isDarkMode={isDark} showToast={showToast} />
+      <Footer />
     </>
   );
 }
